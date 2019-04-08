@@ -17,5 +17,7 @@ public interface TodoService {
 	// Alta del TODO: METHOD POST (Respetar convenciones en la url). Que reciba
 	// la foto/imagen también.
 	void addTodo(TodoDto todoDTO);
+	
+	//metodode actualizacion de estado
 	void changeState(TodoDto todoDto);
 }

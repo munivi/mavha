@@ -67,35 +67,22 @@ public class TodoController {
 
 		return new ResponseEntity<List<TodoDto>>(todos, HttpStatus.OK);
 		
-//		return new ResponseEntity<>("Hola anduvo ok", HttpStatus.OK);
 
 	}
-
 	
-	
-	
-	
-	@PutMapping(value = "/update")
-	public ResponseEntity<?> updateEstado(@RequestPart(value = "file", required = false) MultipartFile file,
-			@RequestParam("id") Integer id, @RequestParam("descripcion") String descripcion,
+	@PutMapping(value = "todos/update")
+	public ResponseEntity<?> updateEstado(@RequestParam("id") Integer id,
 			@RequestParam("estado") Boolean estado) throws IOException {
 
 		Map<String, Object> response = new HashMap<>();
 
 		TodoDto todoRequestDto = new TodoDto();
-
-		todoRequestDto.setImagen(file.getBytes());
-		todoRequestDto.setDescripcion(descripcion);
 		todoRequestDto.setId(id);
 		todoRequestDto.setEstado(estado);
 
-		// Check For existing todo
-		TodoDto todoRequestDtoId = new TodoDto();
-		todoRequestDtoId.setId(id);
-
-		todoService.addTodo(todoRequestDto);
-		response.put("mensaje", "Alta exitosa");
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		todoService.changeState(todoRequestDto);
+		response.put("mensaje", "Actualizacion de estado exitosa");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 	}
 	

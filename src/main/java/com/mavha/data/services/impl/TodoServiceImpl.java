@@ -33,7 +33,7 @@ public class TodoServiceImpl implements TodoService {
 		todos.forEach(todo -> todosList.add(TodoMapper.toDTO(todo)));
 		return todosList;
 	}
-
+	
 
 	@Override
 	public void addTodo(TodoDto todoDto) {
@@ -43,7 +43,10 @@ public class TodoServiceImpl implements TodoService {
 	//cambio de estado
 	@Override
 	public void changeState(TodoDto todoDto) {
-		todoRepository.save(TodoMapper.toModel(todoDto));
+		List<TodoDto> todos = this.findAllByQuery(new TodoDto(todoDto.getId()));
+		TodoDto todo = todos.get(0);
+		todo.setEstado(todoDto.getEstado()); 
+		 todoRepository.save(TodoMapper.toModel(todo));
 		
 	}
 
